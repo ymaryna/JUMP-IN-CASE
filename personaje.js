@@ -21,7 +21,10 @@ class Personaje {
         this.ay = 0.8
 
         this.img = new Image()
-        this.img.src = "https://www.codeandweb.com/blog/2016/05/10/how-to-create-a-sprite-sheet/spritestrip.png"
+        this.img.src = "./IMAGENES/Sprite1.png"
+
+        this.img2 = new Image()
+        this.img2.src = "./IMAGENES/Sprite2.png"
 
         this.img.frames = 6
         this.img.frameIndex = 0
@@ -35,20 +38,73 @@ class Personaje {
         }
 
         this._setListeners()
+
+        this.actionId = false
     }
 
     draw() {
-        this.ctx.drawImage(
-            this.img,
-            this.img.frameIndex * this.img.width / this.img.frames,
-            0,
-            this.img.width / this.img.frames,
-            this.img.height,
-            this.x,
-            this.y,
-            this.w,
-            this.h0
-        )
+    
+
+        if (this.actions.left) {
+            this.actionId = false
+            console.log(this.actionId + " if left")
+        } else if (this.actions.right) {
+            this.actionId = true
+            console.log(this.actionId + " if right")
+        } 
+        
+        if (this.actions.right && !this.actions.left) {
+            this.ctx.drawImage(
+                this.img,
+                this.img.frameIndex * this.img.width / this.img.frames,
+                0,
+                this.img.width / this.img.frames,
+                this.img.height,
+                this.x,
+                this.y,
+                this.w,
+                this.h0
+            )
+        } else if (this.actions.left && !this.actions.right) {
+            this.ctx.drawImage(
+                this.img2,
+                this.img.frameIndex * this.img.width / this.img.frames,
+                0,
+                this.img2.width / this.img.frames,
+                this.img2.height,
+                this.x,
+                this.y,
+                this.w,
+                this.h0
+            )
+    
+        } else if (this.actionId) {
+            // console.log(actionId)
+            this.ctx.drawImage(
+                this.img,
+                this.img.frameIndex * this.img.width / this.img.frames,
+                0,
+                this.img.width / this.img.frames,
+                this.img.height,
+                this.x,
+                this.y,
+                this.w,
+                this.h0
+            ) 
+        } else if (!this.actionId){
+            // console.log(actionId)
+            this.ctx.drawImage(
+                this.img2,
+                this.img.frameIndex * this.img.width / this.img.frames,
+                0,
+                this.img2.width / this.img.frames,
+                this.img2.height,
+                this.x,
+                this.y,
+                this.w,
+                this.h0
+            ) 
+        }
 
         this._animate()
     }
