@@ -5,8 +5,7 @@ const game = new Game(ctx)
 
 
 window.onload = function() {
-  game.draw()
-  game.run()
+    game._runAnimationLoop()
 
   // document.getElementById("start-button").onclick = function() {
   //   startGame();
@@ -16,4 +15,4 @@ window.onload = function() {
   //   game.run()
 
   // }
-};
+}

@@ -4,7 +4,7 @@ const RIGHT_KEY = 39
 const LEFT_KEY = 37
 const SPACE_KEY = 32
 
-class Personaje {
+class Character {
     constructor(ctx) {
         this.ctx = ctx
 
@@ -42,70 +42,35 @@ class Personaje {
         this.actionId = false
     }
 
+
+    _getImgToDraw() {
+        if ((this.actions.right && !this.actions.left) || this.actionId) {
+          return this.img
+        } else if ((this.actions.left && !this.actions.right) || !this.actionId) {
+          return this.img2
+        }
+    }
+
     draw() {
-    
 
         if (this.actions.left) {
             this.actionId = false
-            console.log(this.actionId + " if left")
         } else if (this.actions.right) {
             this.actionId = true
-            console.log(this.actionId + " if right")
         } 
-        
-        if (this.actions.right && !this.actions.left) {
-            this.ctx.drawImage(
-                this.img,
-                this.img.frameIndex * this.img.width / this.img.frames,
-                0,
-                this.img.width / this.img.frames,
-                this.img.height,
-                this.x,
-                this.y,
-                this.w,
-                this.h0
-            )
-        } else if (this.actions.left && !this.actions.right) {
-            this.ctx.drawImage(
-                this.img2,
-                this.img.frameIndex * this.img.width / this.img.frames,
-                0,
-                this.img2.width / this.img.frames,
-                this.img2.height,
-                this.x,
-                this.y,
-                this.w,
-                this.h0
-            )
-    
-        } else if (this.actionId) {
-            // console.log(actionId)
-            this.ctx.drawImage(
-                this.img,
-                this.img.frameIndex * this.img.width / this.img.frames,
-                0,
-                this.img.width / this.img.frames,
-                this.img.height,
-                this.x,
-                this.y,
-                this.w,
-                this.h0
-            ) 
-        } else if (!this.actionId){
-            // console.log(actionId)
-            this.ctx.drawImage(
-                this.img2,
-                this.img.frameIndex * this.img.width / this.img.frames,
-                0,
-                this.img2.width / this.img.frames,
-                this.img2.height,
-                this.x,
-                this.y,
-                this.w,
-                this.h0
-            ) 
-        }
 
+        this.ctx.drawImage(
+            this._getImgToDraw(),
+            this.img.frameIndex * this.img.width / this.img.frames,
+            0,
+            this.img.width / this.img.frames,
+            this.img.height,
+            this.x,
+            this.y,
+            this.w,
+            this.h0
+        )
+        
         this._animate()
     }
 
@@ -144,7 +109,6 @@ class Personaje {
 
     }
 
-
     _setListeners() {
         document.onkeydown = (e) => this._switchAction(e.keyCode, true)
         document.onkeyup = (e) => this._switchAction(e.keyCode, false)
@@ -171,10 +135,16 @@ class Personaje {
         switch (key) {
             case LEFT_KEY:
                 this.actions.left = apply
+                if (apply) {
+                    this.actions.right = false
+                }
             break;
                 
             case RIGHT_KEY:
                 this.actions.right = apply
+                if (apply) {
+                    this.actions.left = false
+                }
                 
             break;
     
@@ -193,8 +163,9 @@ class Personaje {
     _jump() {
         if (!this._isJumping()) {
           this.img.frameIndex = 3
-          this.y -= 10
-          this.vy -= 15
+          this.y -= 15
+          this.vy -= 20
+
         }
     }
 
