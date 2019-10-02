@@ -59,7 +59,7 @@ class Game {
     collisions() {
 
         this.platforms.forEach(e => {
-            if (this._checkCollisions()) {
+            if (this._checkCollisions(e)) {
                 this.character.y0 = (e.y - e.img.height) + 20
             } else {
                 this.character.y0 = 600
@@ -67,13 +67,12 @@ class Game {
         })
     }
 
-    _checkCollisions() {
-
-        this.platforms.forEach(e => {
+    _checkCollisions(e) {
+            
             if (this.character.y + this.character.h0 <= e.y + e.img.height && this.character.vy >= 0 && this.character.x > e.x && this.character.x < e.x + e.w) {
                 return true
             }
             return false
-        })
+
     }
 }
