@@ -3,6 +3,8 @@ class Weapon {
         this.shooter = shooter
         this.bullets =  []
 
+        this.damage = 20
+
         this.tick = 0
     }
 
@@ -13,8 +15,8 @@ class Weapon {
             this.bullets.push(
                 new Bullet(
                     this.shooter.ctx,
-                    this.shooter.x + this.shooter.w * 0.5,
-                    this.shooter.y + this.shooter.h0 * 0.5,
+                    this.shooter.x + this.shooter.w * (0.5 * (this.shooter.actionId ? 1 : -1)),
+                    this.shooter.y + this.shooter.h * 0.5,
                     this.shooter.actionId
                 )
             )

@@ -4,6 +4,8 @@ class Bullet {
         this.x = x
         this.y = y
         this.id = id
+        this.w = 25
+        this.h = 13
 
         this.img = new Image()
         this.img.src ="./IMAGENES/laserBullet.png"
@@ -18,8 +20,8 @@ class Bullet {
             this.img,
             this.x,
             this.y,
-            25,
-            13
+            this.w,
+            this.h
           )
     }
 

@@ -15,13 +15,22 @@ class Character {
         this.y0 = 600
         this.y = this.y0
         this.x = x
-        this.h
-        this.h0 = 80
+        this.h = 80
         this.w = 80
     
         this.vy = 0
         this.vx = 0
         this.ay = 0.8
+
+        this.health = 100
+
+        if (ch === 'ch1'){
+            this.xHealt = this.ctx.canvas.width / 2 - 100
+            this.yHealt = 50
+        } else {
+            this.xHealt = this.ctx.canvas.width / 2 + 100
+            this.yHealt = 50
+        }
 
         this.img = new Image()
         this.img.src = "./IMAGENES/Sprite1.png"
@@ -75,12 +84,18 @@ class Character {
             this.x,
             this.y,
             this.w,
-            this.h0
+            this.h
         )
         
         this._animate()
         
         this.weapon.draw()
+
+        this.ctx.fillStyle = "#000"
+        this.ctx.font = "50px Verdana"
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(this.health, this.xHealt, this.yHealt)
+
     }
 
     move() {
@@ -229,4 +244,8 @@ class Character {
     _isJumping() {
         return this.y < this.y0
       }
+
+      _health () {
+        this.health -= this.weapon.damage
+    }
 }
