@@ -3,7 +3,8 @@ class Game {
         this.ctx = ctx
 
         this.bg = new Background(ctx)
-        this.character = new Character(ctx)
+        this.character1 = new Character(ctx, 0, "ch1")
+        this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2")
         
         this.img1 = new Image()
         this.img1.src = "./IMAGENES/Platform1.png"
@@ -16,11 +17,11 @@ class Game {
 
         this.platform1 = new Platform(ctx, this.img1, 750, 450, 423, 72)
         this.platform2 = new Platform(ctx, this.img2, 200, 450, 258, 71)
-        this.platform3 = new Platform(ctx, this.img3, 850, 230, 159, 67)
+        this.platform3 = new Platform(ctx, this.img3, 850, 280, 159, 67)
         this.platform4 = new Platform(ctx, this.img2, 400, 150, 258, 71)
 
         const platforms = []
-
+        const characters = []
 
         this.intervalId = 0
 
@@ -46,33 +47,37 @@ class Game {
         this.bg.draw()
 
         this.platforms = [this.platform1, this.platform2, this.platform3, this.platform4]
+
+        this.platforms.reverse()
         this.platforms.forEach(e => e.draw());
 
-        this.character.draw()
+        this.characters = [this.character1, this.character2]
         
+        this.characters.forEach(e => e.draw())   
     }
 
     move() {
-        this.character.move()
+        this.characters.forEach(e => e.move())
     }
 
     collisions() {
+        
+        this.characters.forEach(c => {
+            const platformColliding = this.platforms.find(e => this._checkCollisions(e, c))
 
-        this.platforms.forEach(e => {
-            if (this._checkCollisions(e)) {
-                this.character.y0 = (e.y - e.img.height) + 20
+            if (platformColliding) {
+                c.y0 = platformColliding.y - platformColliding.img.height + 20
             } else {
-                this.character.y0 = 600
+                c.y0 = 600
             }
         })
     }
 
-    _checkCollisions(e) {
-            
-            if (this.character.y + this.character.h0 <= e.y + e.img.height && this.character.vy >= 0 && this.character.x > e.x && this.character.x < e.x + e.w) {
-                return true
-            }
-            return false
+    _checkCollisions(e, c) {
+        if (c.y + c.h0 <= e.y + e.img.height && c.vy >= 0 && c.x > e.x && c.x < e.x + e.w) {
+            return true
+        }
+        return false
 
     }
 }

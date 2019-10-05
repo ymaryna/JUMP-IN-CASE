@@ -7,7 +7,7 @@ class Background {
         this.h = this.ctx.canvas.height
 
         this.img = new Image()
-        this.img.src = "https://www.tokkoro.com/picsup/2844946-the-elder-scrolls-v-skyrim-video-games-clouds-aurorae-sky-mountain___game-wallpapers.jpg"
+        this.img.src = "./IMAGENES/2844946-the-elder-scrolls-v-skyrim-video-games-clouds-aurorae-sky-mountain___game-wallpapers.jpg"
 
     }
 

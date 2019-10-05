@@ -2,16 +2,19 @@ const TOP_KEY = 38
 const DOWN_KEY = 40
 const RIGHT_KEY = 39
 const LEFT_KEY = 37
-const SPACE_KEY = 32
+const W_KEY = 87
+const S_KEY = 83
+const A_KEY = 65
+const D_KEY = 68
 
 class Character {
-    constructor(ctx) {
+    constructor(ctx, x, ch) {
         this.ctx = ctx
-
+        this.ch = ch
 
         this.y0 = 600
         this.y = this.y0
-        this.x = 0
+        this.x = x
         this.h
         this.h0 = 80
         this.w = 80
@@ -34,8 +37,12 @@ class Character {
         this.actions = {
             right: false,
             left: false,
+            up: false,
+            shoot: false,
             space: false
         }
+
+        this.weapon = new Weapon(this)
 
         this._setListeners()
 
@@ -58,7 +65,7 @@ class Character {
         } else if (this.actions.right) {
             this.actionId = true
         } 
-
+        
         this.ctx.drawImage(
             this._getImgToDraw(),
             this.img.frameIndex * this.img.width / this.img.frames,
@@ -72,6 +79,8 @@ class Character {
         )
         
         this._animate()
+        
+        this.weapon.draw()
     }
 
     move() {
@@ -85,6 +94,18 @@ class Character {
         }
         
         this._applyActions()
+
+
+        if (this.y <= 0) {
+            this.y = 0
+            this.vy = 0
+        } else if (this.x <= 0) {
+            this.x = 0
+        } else if (this.x + this.w >= this.ctx.canvas.width) {
+            this.x = this.ctx.canvas.width - this.w
+        }
+
+        this.weapon.move()
     }
 
     _animate() {
@@ -110,8 +131,8 @@ class Character {
     }
 
     _setListeners() {
-        document.onkeydown = (e) => this._switchAction(e.keyCode, true)
-        document.onkeyup = (e) => this._switchAction(e.keyCode, false)
+        document.addEventListener('keydown', (e) => this._switchAction(e.keyCode, true))
+        document.addEventListener('keyup', e => this._switchAction(e.keyCode, false))
     }
 
     _applyActions() {
@@ -125,33 +146,69 @@ class Character {
             this.vx = 0
         }
 
-        if (this.actions.space) {
+        if (this.actions.up) {
             this._jump()
         }
+
+        if (this.actions.shoot) {
+            this.weapon.shoot()
+          }
     }
 
     _switchAction(key, apply) {
 
-        switch (key) {
-            case LEFT_KEY:
-                this.actions.left = apply
-                if (apply) {
-                    this.actions.right = false
-                }
-            break;
-                
-            case RIGHT_KEY:
-                this.actions.right = apply
-                if (apply) {
-                    this.actions.left = false
-                }
-                
-            break;
+        if (this.ch === "ch1"){
+            switch (key) {
+                case A_KEY:
+                    this.actions.left = apply
+                    if (apply) {
+                        this.actions.right = false
+                    }
+                break;
+                    
+                case D_KEY:
+                    this.actions.right = apply
+                    if (apply) {
+                        this.actions.left = false
+                    }
+                    
+                break;
+        
+                case W_KEY:
+                    this.actions.up = apply
+                break;
     
-            case SPACE_KEY:
-                this.actions.space = apply
-            break;
+                case S_KEY:
+                    this.actions.shoot = apply
+            }
         }
+
+        if(this.ch === "ch2") {
+            switch (key) {
+                case LEFT_KEY:
+                    this.actions.left = apply
+                    if (apply) {
+                        this.actions.right = false
+                    }
+                break;
+                    
+                case RIGHT_KEY:
+                    this.actions.right = apply
+                    if (apply) {
+                        this.actions.left = false
+                    }
+                    
+                break;
+        
+                case TOP_KEY:
+                    this.actions.up = apply
+                break;
+    
+                case DOWN_KEY:
+                    this.actions.shoot = apply
+            }
+        }
+
     }
 
     _run() {
