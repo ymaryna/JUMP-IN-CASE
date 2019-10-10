@@ -8,14 +8,16 @@ const A_KEY = 65
 const D_KEY = 68
 
 class Character {
-    constructor(ctx, x, ch) {
+    constructor(ctx, x, ch, srcR, srcL) {
         this.ctx = ctx
         this.ch = ch
+        this.srcR = srcR
+        this.srcL = srcL
 
-        this.y0 = 600
+        this.y0 = 620
         this.y = this.y0
         this.x = x
-        this.h = 80
+        this.h = 65
         this.w = 80
     
         this.vy = 0
@@ -27,16 +29,18 @@ class Character {
         if (ch === 'ch1'){
             this.xHealt = this.ctx.canvas.width / 2 - 100
             this.yHealt = 50
+            this.actionId = true
         } else {
             this.xHealt = this.ctx.canvas.width / 2 + 100
             this.yHealt = 50
+            this.actionId = false
         }
 
         this.img = new Image()
-        this.img.src = "./IMAGENES/Sprite1.png"
+        this.img.src = this.srcR
 
         this.img2 = new Image()
-        this.img2.src = "./IMAGENES/Sprite2.png"
+        this.img2.src = this.srcL
 
         this.img.frames = 6
         this.img.frameIndex = 0
@@ -55,7 +59,7 @@ class Character {
 
         this._setListeners()
 
-        this.actionId = false
+        //this.actionId = false
     }
 
 

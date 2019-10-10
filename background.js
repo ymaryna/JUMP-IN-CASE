@@ -6,14 +6,37 @@ class Background {
         this.w = this.ctx.canvas.width
         this.h = this.ctx.canvas.height
 
-        this.img = new Image()
-        this.img.src = "./IMAGENES/2844946-the-elder-scrolls-v-skyrim-video-games-clouds-aurorae-sky-mountain___game-wallpapers.jpg"
+        this.background = new Image()
+        this.background.src = "./IMAGENES/BACKGROUND.png"
+
+        this.sky = new Image()
+        this.sky.src = "./IMAGENES/BACKGROUND_SKY.png"
+
+        this.clouds = new Image()
+        this.clouds.src = "./IMAGENES/CLOUDS.png"
 
     }
 
     draw() {
+
         this.ctx.drawImage(
-            this.img,
+            this.sky,
+            this.x,
+            this.y,
+            this.w,
+            this.h
+        )
+
+        this.ctx.drawImage(
+            this.clouds,
+            this.x,
+            this.y,
+            this.w,
+            this.h
+        )
+
+        this.ctx.drawImage(
+            this.background,
             this.x,
             this.y,
             this.w,

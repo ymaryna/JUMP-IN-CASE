@@ -3,8 +3,8 @@ class Game {
         this.ctx = ctx
 
         this.bg = new Background(ctx)
-        this.character1 = new Character(ctx, 0, "ch1")
-        this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2")
+        this.character1 = new Character(ctx, 0, "ch1", "./IMAGENES/CORRER_DERECHA_ROJO.png", "./IMAGENES/CORRER_IZQUIERDA_ROJO.png")
+        this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2", "./IMAGENES/CORRER_DERECHA_LILA.png", "./IMAGENES/CORRER_IZQUIERDA_LILA.png")
         
         this.img1 = new Image()
         this.img1.src = "./IMAGENES/Platform1.png"
@@ -15,10 +15,9 @@ class Game {
         this.img3 = new Image()
         this.img3.src = "./IMAGENES/Platform3.png"
 
-        this.platform1 = new Platform(ctx, this.img1, 750, 450, 423, 72)
-        this.platform2 = new Platform(ctx, this.img2, 200, 450, 258, 71)
-        this.platform3 = new Platform(ctx, this.img3, 850, 280, 159, 67)
-        this.platform4 = new Platform(ctx, this.img2, 400, 150, 258, 71)
+        this.platform1 = new Platform(ctx, this.img1, 450, 450, 450, 86)
+        this.platform2 = new Platform(ctx, this.img2, 800, 200, 300, 81)
+        this.platform3 = new Platform(ctx, this.img3, 230, 200, 215, 100)
 
         const platforms = []
         const characters = []
@@ -46,7 +45,7 @@ class Game {
     draw() {
         this.bg.draw()
 
-        this.platforms = [this.platform1, this.platform2, this.platform3, this.platform4]
+        this.platforms = [this.platform1, this.platform2, this.platform3]
 
         this.platforms.reverse()
         this.platforms.forEach(e => e.draw());
@@ -66,19 +65,23 @@ class Game {
             const enemy = this.characters[i === 0 ? 1 : 0]
             const platformColliding = this.platforms.find(p => this._checkCollisions(p, c))
             
+            if (enemy.health <= 0) {
+                this._gameOver()
+            }
+
             const bulletColliding = c.weapon.bullets.find(b => this._checkBulletsCollision(b, enemy))
             // console.log(bulletColliding)
             
             if (platformColliding) {
-                c.y0 = platformColliding.y - platformColliding.img.height + 20
+                c.y0 = platformColliding.y - 50
             } else {
-                c.y0 = 600
+                c.y0 = 620
             }
 
             if (bulletColliding) {
                 enemy._health()
+                console.log(enemy.health)
                 c.weapon.bullets = c.weapon.bullets.filter(bullet => bullet !== bulletColliding);
-                console.log("tocado" + c.health)
             }
         })
     }
@@ -96,11 +99,23 @@ class Game {
         if (
             (
                 ((b.x < c.x + c.w && b.x > c.x) || (b.x + b.w > c.x && b.x + b.w < c.x + c.w)) // horizontal
-                 && (b.y + b.h > c.y && b.y < c.y + c.h)/*|| (b.y + b.h > c.y && b.y + b.h < c.y + c.h))*/ //vertical
+                 && (b.y + b.h > c.y && b.y < c.y + c.h)/*|| (b.x < c.y && b.y + b.h < c.y + c.h))*/ //vertical
             )
         ) {
             return true
         }
         return false
+    }
+
+    _gameOver() {
+        clearInterval(this.intervalId)
+        this.ctx.fillStyle = "black"
+        this.ctx.font = "40px Comic Sans MS";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(
+        "GAME OVER",
+        this.ctx.canvas.width / 2,
+        this.ctx.canvas.height / 2
+    );
     }
 }
