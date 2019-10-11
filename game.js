@@ -1,8 +1,10 @@
+
 class Game {
     constructor(ctx) {
         this.ctx = ctx
+        // this.state = state
 
-        this.bg = new Background(ctx)
+        this.bg = new Background(ctx,)
         this.character1 = new Character(ctx, 0, "ch1", "./IMAGENES/CORRER_DERECHA_ROJO.png", "./IMAGENES/CORRER_IZQUIERDA_ROJO.png")
         this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2", "./IMAGENES/CORRER_DERECHA_LILA.png", "./IMAGENES/CORRER_IZQUIERDA_LILA.png")
         
@@ -14,6 +16,9 @@ class Game {
 
         this.img3 = new Image()
         this.img3.src = "./IMAGENES/Platform3.png"
+
+        this.readyImg = new Image()
+        this.readyImg.src = "./IMAGENES/START.png"
 
         this.platform1 = new Platform(ctx, this.img1, 450, 450, 450, 86)
         this.platform2 = new Platform(ctx, this.img2, 800, 200, 300, 81)
@@ -56,6 +61,7 @@ class Game {
     }
 
     move() {
+        this.bg.move()
         this.characters.forEach(e => e.move())
     }
 
@@ -67,6 +73,7 @@ class Game {
             
             if (enemy.health <= 0) {
                 this._gameOver()
+                // this.state.current = this.state.gameOver   
             }
 
             const bulletColliding = c.weapon.bullets.find(b => this._checkBulletsCollision(b, enemy))
@@ -105,6 +112,16 @@ class Game {
             return true
         }
         return false
+    }
+
+    _getReady() {
+        this.ctx.drawImage(
+            this.readyImg,
+            0,
+            0,
+            this.ctx.canvas.width,
+            this.ctx.canvas.height
+        )
     }
 
     _gameOver() {
