@@ -20,6 +20,12 @@ class Game {
         this.readyImg = new Image()
         this.readyImg.src = "./IMAGENES/START.png"
 
+        this.winnerImgRed = new Image()
+        this.winnerImgRed.src = "./IMAGENES/WINNER_RED.png"
+
+        this.winnerImgPurple = new Image()
+        this.winnerImgPurple.src = "./IMAGENES/WINNER_PURPLE.png"
+
         this.platform1 = new Platform(ctx, this.img1, 450, 450, 450, 86)
         this.platform2 = new Platform(ctx, this.img2, 800, 200, 300, 81)
         this.platform3 = new Platform(ctx, this.img3, 230, 200, 215, 100)
@@ -28,7 +34,6 @@ class Game {
         const characters = []
 
         this.intervalId = 0
-
     }
 
     _runAnimationLoop() {
@@ -125,14 +130,28 @@ class Game {
     }
 
     _gameOver() {
+
+        if(this.character1.health > 0) {
+            this.ctx.drawImage(
+                this.winnerImgRed,
+                0,
+                0,
+                this.ctx.canvas.width,
+                this.ctx.canvas.height
+            )
+        } else {
+            this.ctx.drawImage(
+                this.winnerImgPurple,
+                0,
+                0,
+                this.ctx.canvas.width,
+                this.ctx.canvas.height
+            )
+        }
         clearInterval(this.intervalId)
-        this.ctx.fillStyle = "black"
-        this.ctx.font = "40px Comic Sans MS";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText(
-        "GAME OVER",
-        this.ctx.canvas.width / 2,
-        this.ctx.canvas.height / 2
-    );
+
+        this.ctx.canvas.addEventListener("click", function(){
+            location.reload()
+        })
     }
 }
