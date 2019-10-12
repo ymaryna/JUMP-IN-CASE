@@ -92,7 +92,6 @@ class Game {
 
             if (bulletColliding) {
                 enemy._health()
-                console.log(enemy.health)
                 c.weapon.bullets = c.weapon.bullets.filter(bullet => bullet !== bulletColliding);
             }
         })

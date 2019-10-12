@@ -30,10 +30,36 @@ class Character {
             this.xHealt = this.ctx.canvas.width / 2 - 100
             this.yHealt = 50
             this.actionId = true
+            this.healthX = 320
+            this.healthY = 20
+
+            this.health100 = new Image()
+            this.health100.src = "./IMAGENES/HEALTH-100-RED.png"
+            this.health80 = new Image()
+            this.health80.src = "./IMAGENES/HEALTH-80-RED.png"
+            this.health60 = new Image()
+            this.health60.src = "./IMAGENES/HEALTH-60-RED.png"
+            this.health40 = new Image()
+            this.health40.src = "./IMAGENES/HEALTH-40-RED.png"
+            this.health20 = new Image()
+            this.health20.src = "./IMAGENES/HEALTH-20-RED.png"
         } else {
             this.xHealt = this.ctx.canvas.width / 2 + 100
             this.yHealt = 50
             this.actionId = false
+            this.healthX = 700
+            this.healthY = 20
+
+            this.health100 = new Image()
+            this.health100.src = "./IMAGENES/HEALTH-100-PURPLE.png"
+            this.health80 = new Image()
+            this.health80.src = "./IMAGENES/HEALTH-80-PURPLE.png"
+            this.health60 = new Image()
+            this.health60.src = "./IMAGENES/HEALTH-60-PURPLE.png"
+            this.health40 = new Image()
+            this.health40.src = "./IMAGENES/HEALTH-40-PURPLE.png"
+            this.health20 = new Image()
+            this.health20.src = "./IMAGENES/HEALTH-20-PURPLE.png"
         }
 
         this.img = new Image()
@@ -95,11 +121,58 @@ class Character {
         
         this.weapon.draw()
 
-        this.ctx.fillStyle = "#000"
-        this.ctx.font = "50px Verdana"
-        this.ctx.textAlign = "center";
-        this.ctx.fillText(this.health, this.xHealt, this.yHealt)
+        // this.ctx.fillStyle = "#000"
+        // this.ctx.font = "50px Verdana"
+        // this.ctx.textAlign = "center";
+        // this.ctx.fillText(this.health, this.xHealt, this.yHealt)
 
+        switch(this.health){
+            case 100:
+                this.ctx.drawImage(
+                    this.health100,
+                    this.healthX,
+                    this.healthY,
+                    260,
+                    70
+                )
+                break
+            case 80:
+                this.ctx.drawImage(
+                    this.health80,
+                    this.healthX,
+                    this.healthY,
+                    260,
+                    70
+                )
+                break
+            case 60:
+                this.ctx.drawImage(
+                    this.health60,
+                    this.healthX,
+                    this.healthY,
+                    260,
+                    70
+                )
+                break
+            case 40:
+                this.ctx.drawImage(
+                    this.health40,
+                    this.healthX,
+                    this.healthY,
+                    260,
+                    70
+                )
+                break
+            case 20:
+                this.ctx.drawImage(
+                    this.health20,
+                    this.healthX,
+                    this.healthY,
+                    260,
+                    70
+                )
+                break
+        }
     }
 
     move() {
