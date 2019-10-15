@@ -5,8 +5,8 @@ class Game {
         // this.state = state
 
         this.bg = new Background(ctx,)
-        this.character1 = new Character(ctx, 0, "ch1", "./IMAGENES/CORRER_DERECHA_ROJO.png", "./IMAGENES/CORRER_IZQUIERDA_ROJO.png")
-        this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2", "./IMAGENES/CORRER_DERECHA_LILA.png", "./IMAGENES/CORRER_IZQUIERDA_LILA.png")
+        this.character1 = new Character(ctx, 0, "ch1", "./IMAGENES/RUN_RIGHT_RED.png", "./IMAGENES/RUN_LEFT_RED.png")
+        this.character2 = new Character(ctx, this.ctx.canvas.width, "ch2", "./IMAGENES/RUN_RIGHT_PURPLE.png", "./IMAGENES/RUN_LEFT_PURPLE.png")
         
         this.img1 = new Image()
         this.img1.src = "./IMAGENES/Platform1.png"
