@@ -16,6 +16,7 @@ class Bullet {
     }
 
     draw() {
+        
         this.ctx.drawImage(
             this.img,
             this.x,

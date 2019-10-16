@@ -86,6 +86,8 @@ class Character {
         this._setListeners()
 
         //this.actionId = false
+
+        // this.jumpSound = new Audio("./SOUNDS/JUMP.mp3")
     }
 
 

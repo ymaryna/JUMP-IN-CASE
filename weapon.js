@@ -6,11 +6,12 @@ class Weapon {
         this.damage = 20
 
         this.tick = 0
+        this.shootAudio = new Audio("./SOUNDS/SHOOT.mp3")
     }
 
     shoot() {
         this.tick++
-
+        this.shootAudio.play()
         if(this.tick >= 16) {
             this.bullets.push(
                 new Bullet(

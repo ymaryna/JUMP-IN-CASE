@@ -34,9 +34,15 @@ class Game {
         const characters = []
 
         this.intervalId = 0
+
+        this.gameAudio = new Audio("./SOUNDS/GAMEAUDIO.mp3");
+        this.victoryAudio = new Audio("./SOUNDS/VICTORYAUDIO.mp3")
+        this.hitSound = new Audio("./SOUNDS/DAMAGE.mp3")
     }
 
     _runAnimationLoop() {
+        this.gameAudio.volume = 0.1
+        this.gameAudio.play()
         this.intervalId = setInterval(() => {
           this.clear()
           this.draw()
@@ -91,6 +97,7 @@ class Game {
             }
 
             if (bulletColliding) {
+                this.hitSound.play()
                 enemy._health()
                 c.weapon.bullets = c.weapon.bullets.filter(bullet => bullet !== bulletColliding);
             }
@@ -129,7 +136,8 @@ class Game {
     }
 
     _gameOver() {
-
+        this.gameAudio.pause()
+        this.victoryAudio.play()
         if(this.character1.health > 0) {
             this.ctx.drawImage(
                 this.winnerImgRed,
